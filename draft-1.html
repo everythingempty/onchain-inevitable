@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why onchain is inevitable — a marked-up draft</title>
+<meta name="description" content="Money goes where it has the most next moves. Everything else is slope. An essay on why most of the world's money ends up onchain, with the author's pen still on it.">
+<meta name="author" content="WeeKee (@everythingempty)">
+<link rel="canonical" href="https://everythingempty.github.io/onchain-inevitable/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Why onchain is inevitable">
+<meta property="og:description" content="Money goes where it has the most next moves. Everything else is slope. Draft 1, marked up.">
+<meta property="og:url" content="https://everythingempty.github.io/onchain-inevitable/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@everythingempty">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%23F6F1E6'/%3E%3Cellipse cx='32' cy='33' rx='22' ry='15' fill='none' stroke='%23C9372C' stroke-width='3.5' transform='rotate(-6 32 33)'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Inter:wght@500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f6f1e6; --ink:#1b1a17; --ink-2:#57544c; --ink-3:#8c877b;
+    --hl:#ffe85a; --red:#c9372c; --blue:#2a56c6; --sticky:#fff083;
+    --serif:'Source Serif 4', Georgia, 'Times New Roman', serif;
+    --sans:'Inter', -apple-system, system-ui, 'Helvetica Neue', sans-serif;
+    --hand:'Caveat', 'Bradley Hand', 'Segoe Print', cursive;
+  }
+  *{box-sizing:border-box}
+  html{background:#121212}
+  body{margin:0;color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.62;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  ::selection{background:var(--hl);color:var(--ink)}
+  a{color:inherit;text-decoration:underline;text-decoration-color:rgba(27,26,23,.35);text-underline-offset:3px;text-decoration-thickness:1px}
+  a:hover{text-decoration-color:var(--ink)}
+
+  .sheet{position:relative;max-width:1080px;margin:44px auto 88px;background:var(--paper);border-radius:14px;
+    box-shadow:0 30px 80px rgba(0,0,0,.55), 0 2px 6px rgba(0,0,0,.3);padding:52px 64px 64px}
+
+  /* masthead */
+  .masthead{display:grid;grid-template-columns:1fr auto 1fr;align-items:baseline;gap:16px;padding-bottom:12px;border-bottom:1.5px solid var(--ink);
+    font-family:var(--sans);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2);font-weight:500}
+  .masthead .r{text-align:right}
+  .masthead a{text-decoration:none}
+  .masthead a:hover{text-decoration:underline}
+
+  /* top: letter + statement */
+  .top{position:relative;display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);gap:60px;margin-top:40px}
+  .label{font-family:var(--sans);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);margin:0 0 12px;font-weight:500}
+  h1{font-size:46px;line-height:1.04;margin:0 0 14px;font-weight:700;letter-spacing:-.015em}
+  .dek{font-style:italic;color:var(--ink-2);font-size:20px;line-height:1.4;margin:0 0 24px}
+  .byline{font-style:italic;color:var(--ink-2);margin:8px 0 0}
+
+  .statement .row{display:flex;justify-content:space-between;align-items:baseline;gap:18px;padding:9px 0;border-bottom:1px solid rgba(27,26,23,.18);font-size:14.5px}
+  .statement .row .k{color:var(--ink);white-space:nowrap}
+  .statement .row .v{text-align:right;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap}
+  .statement .row.key{position:relative;font-weight:600}
+  .statement .row.key::before{content:"";position:absolute;left:-14px;right:-12px;top:-7px;bottom:-5px;border:2px solid var(--red);
+    border-radius:50% 46% 52% 48% / 62% 58% 64% 54%;transform:rotate(-1.4deg);pointer-events:none}
+  .statement .row.key .v{white-space:normal;text-align:right}
+  .statement .after{margin:16px 0 0 auto;max-width:300px;text-align:right}
+
+  /* body + margin notes */
+  .body{position:relative;max-width:620px;margin-top:44px}
+  h2{font-size:26px;line-height:1.2;margin:46px 0 12px;font-weight:700;letter-spacing:-.01em}
+  p{margin:0 0 16px}
+  .p{position:relative}
+  .thesis{font-weight:700}
+  .math{font-style:italic;white-space:nowrap}
+  ol{padding-left:1.3em;margin:0 0 16px}
+  li{margin:0 0 6px}
+
+  /* pen */
+  .hand{font-family:var(--hand);font-weight:500;line-height:1.12;color:var(--blue)}
+  .hand.red{color:var(--red)}
+  .note{position:absolute;left:calc(100% + 36px);top:2px;width:292px;font-size:21px;transform:rotate(-1.6deg);transform-origin:left top}
+  .note.red{transform:rotate(1.1deg)}
+  .under{display:block;font-size:21px;margin:-8px 0 16px 10px;transform:rotate(-.8deg);transform-origin:left top}
+  .hl{background:linear-gradient(100deg, rgba(255,232,90,0) 0%, rgba(255,232,90,.95) 2.5%, rgba(255,232,90,.88) 97%, rgba(255,232,90,0) 100%);
+    padding:.04em .28em;margin:0 -.12em;border-radius:.3em .7em .35em .6em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+  s.pen{text-decoration:line-through;text-decoration-color:var(--red);text-decoration-thickness:2px;text-decoration-skip-ink:none}
+  .circle{position:relative;display:inline-block;padding:0 .15em}
+  .circle::before{content:"";position:absolute;inset:-.42em -.6em -.36em -.55em;border:2px solid var(--red);
+    border-radius:50% 46% 52% 48% / 62% 58% 64% 54%;transform:rotate(-3deg);pointer-events:none}
+
+  .sticky{position:relative;display:block;width:236px;padding:18px 18px 20px;background:var(--sticky);color:#3a3410;
+    font-family:var(--hand);font-weight:500;font-size:21px;line-height:1.15;transform:rotate(-2.4deg);
+    box-shadow:3px 7px 16px rgba(0,0,0,.18), 0 1px 0 rgba(0,0,0,.06);margin:40px 20px 0 auto;text-decoration:none}
+  .sticky::before{content:"";position:absolute;left:0;right:0;top:0;height:22px;background:linear-gradient(rgba(0,0,0,.06),rgba(0,0,0,0));pointer-events:none}
+  .sticky:hover{transform:rotate(-1.6deg)}
+
+  .ring{position:absolute;left:34%;bottom:-54px;width:118px;height:118px;border-radius:50%;pointer-events:none;
+    border:7px solid rgba(118,82,45,.15);box-shadow:inset 0 0 0 1.5px rgba(118,82,45,.09), 0 0 0 1.5px rgba(118,82,45,.07)}
+  .ring::after{content:"";position:absolute;inset:-9px;border-radius:50%;border:1.5px solid rgba(118,82,45,.08);transform:rotate(20deg) scale(1.02,.98)}
+
+  .signoff{font-size:25px;text-align:right;transform:rotate(-1.2deg);margin:48px 0 0}
+
+  .colophon{margin-top:64px;padding-top:14px;border-top:1px solid rgba(27,26,23,.28);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px 24px;
+    font-family:var(--sans);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
+  .colophon a{text-decoration:none}
+  .colophon a:hover{text-decoration:underline}
+
+  @media (max-width:1180px){
+    .note{position:static;display:block;width:auto;margin:-6px 0 18px 10px;transform:rotate(-.7deg)}
+  }
+  @media (max-width:860px){
+    body{font-size:17px}
+    .sheet{margin:14px auto 48px;padding:30px 24px 48px;border-radius:10px}
+    .masthead{grid-template-columns:1fr 1fr;font-size:9.5px}
+    .masthead .c{grid-column:1 / -1;order:3;padding-top:6px}
+    .top{grid-template-columns:1fr;gap:30px;margin-top:30px}
+    h1{font-size:36px}
+    .dek{font-size:18px}
+    .ring{display:none}
+    .sticky{margin:28px 0 0 auto}
+    .statement .after{max-width:none}
+    .note,.under{font-size:19px}
+  }
+  @media print{
+    html{background:#fff}
+    .sheet{box-shadow:none;max-width:none;margin:0;padding:0 8mm}
+    .note{position:static;display:block;width:auto;margin:-4px 0 14px 10px}
+    .ring,.sticky{display:none}
+  }
+</style>
+</head>
+<body>
+<main class="sheet">
+
+  <header class="masthead">
+    <div class="l">everythingempty</div>
+    <div class="c">Essay · November 2026 · Draft 1</div>
+    <div class="r"><a href="https://x.com/everythingempty" rel="me">x.com/everythingempty</a></div>
+  </header>
+
+  <section class="top">
+    <div class="letter">
+      <p class="label">Essay</p>
+      <h1>Why onchain is inevitable</h1>
+      <p class="dek">Money goes where it has the most next moves. Everything else is slope.</p>
+
+      <p>In January someone asked me, again, why crypto would ever “come back”. <a href="https://x.com/everythingempty/status/2007452161433866486">I answered with a list.</a> Have you executed a trade through Etherscan because the frontend was down. Bought an asset on one venue and sold it on another. Read a stranger’s wallet to see how they made their money. Sent money and watched it arrive. Borrowed at 3am against rules you could read, from nobody. How do you even go back. Then the line that was the real argument: predicting the future from the current state of an industry is what a tourist does.</p>
+
+      <p>Here is the non-tourist argument. Not that onchain is good, or that it deserves to win. That most of the world’s money ends up there, that this follows from how money and people behave rather than from anything crypto does right, and that hacks, bans and capital controls change how fast it happens, not whether.</p>
+
+      <p class="byline">— WeeKee, cofounder</p>
+    </div>
+
+    <aside class="statement" aria-label="Statement of the claim">
+      <p class="label">Statement of the claim · Draft 1</p>
+      <div class="row"><span class="k">The claim</span><span class="v">more next moves, lower cost</span></div>
+      <div class="row"><span class="k">The mechanism</span><span class="v"><span class="math"><i>F</i> = <i>E</i> − <i>TS</i></span></span></div>
+      <div class="row"><span class="k">Sets the slope</span><span class="v">hacks · governments · UX</span></div>
+      <div class="row"><span class="k">Sets the sign</span><span class="v">nothing, so far</span></div>
+      <div class="row key"><span class="k">The falsifier</span><span class="v">losses per $ secured, rising for years</span></div>
+      <div class="row"><span class="k">The clock</span><span class="v">≈ 2005</span></div>
+      <div class="row"><span class="k">Share of money onchain</span><span class="v">↑</span></div>
+      <div class="after">
+        <span class="hand red" style="display:block;font-size:22px;transform:rotate(-2deg)">the only line that matters. —WK</span>
+        <span class="hand" style="display:block;font-size:19px;margin-top:4px;transform:rotate(-1deg)">measure it on years, not headlines ↑</span>
+      </div>
+      <a class="sticky" href="https://x.com/everythingempty">readers: tell me what you’d cut. reply to this page.</a>
+    </aside>
+
+    <div class="ring" aria-hidden="true"></div>
+  </section>
+
+  <article class="body">
+
+    <h2>The one reason</h2>
+
+    <div class="p">
+      <p>The version I used to say was “<s class="pen">people prefer freedom to restriction</s>.” It is the weak version. Most people reveal a preference for convenience, not freedom. Robinhood and Venmo did not win because Americans were oppressed by their banks; they won because they were easier. The strong version is about money, not people:</p>
+      <span class="hand red under">↑ the version I kept saying. wrong — it’s about money, not people.</span>
+    </div>
+
+    <div class="p">
+      <p class="thesis"><span class="hl">Capital flows to wherever it has the most possible next moves at the lowest cost.</span></p>
+      <span class="hand under">↑ this is the whole thesis. everything after it is slope.</span>
+    </div>
+
+    <p>A dollar in a bank account has a short list of next moves, available during business hours, inside one jurisdiction, subject to someone’s approval. A dollar onchain can be collateral, liquidity, a stream, a bet, a loan, or a payment to any counterparty on earth, at any hour, with no one to ask. It is global, always-on, programmable and holder-controlled at the same time. No other form of money has all four. So it has strictly more next moves, and the only question left is what each move costs.</p>
+
+    <div class="p">
+      <p>If you want the physics to be more than a metaphor, it holds. A system settles into the state with the most configurations, discounted by energy: free energy is energy minus temperature times entropy, <span class="circle"><span class="math"><i>F</i> = <i>E</i> − <i>TS</i></span></span>. Onchain money has higher entropy in the literal sense of more states it can occupy. Tradfi has lower energy: fewer losses per dollar, for now. The share of money onchain rises as its losses per dollar secured fall, and as the temperature rises, meaning the velocity at which money is actually moved. That is what makes this a thesis and not a religion. If, over any multi-year window, hack losses per dollar secured stop falling, I am wrong. As a share of value secured, they have been falling for years.</p>
+      <span class="hand red note">the falsifier. if losses per $ secured stop falling over a multi-year window, I’m wrong. hold me to it.</span>
+    </div>
+
+    <h2>Three waves</h2>
+
+    <p>Freedom is the first-wave driver, not the whole story.</p>
+
+    <div class="p">
+      <p>The first wave is people with restricted money: Argentina, Nigeria, Turkey, anyone who has ever needed a Chinese OTC desk. For them the freedom preference is already revealed, and the wave is already here. Every capital control creates a local stablecoin market. The control is the demand.</p>
+      <span class="hand note">this wave already happened. nobody voted on it.</span>
+    </div>
+
+    <p>The second wave is people with unrestricted money, which is most of the money. They do not come for freedom. They come for convenience and yield, once the experience reaches parity: a wallet that lives behind a passkey, no gas, no seed phrase, approvals that read like a sentence. This wave is gated on UX, and UX is the kind of problem that gets solved.</p>
+
+    <p>The third wave is institutions, and they come for cost. Same-day settlement, no reconciliation, one ledger instead of twelve. BlackRock’s tokenized treasury fund, JPMorgan’s deposit token and Nasdaq asking the SEC to let it trade tokenized stock are not experiments in ideology. They are cost-cutting.</p>
+
+    <p>Governments and hackers set the slope of this curve. They do not set its sign.</p>
+
+    <h2>Five forces, one direction</h2>
+
+    <p>Take the forces one at a time and ask which way each points.</p>
+
+    <p><strong>Human nature.</strong> Loss aversion makes tasted optionality a one-way door: you feel the loss of being able to move your money at 3am far more than you ever valued gaining it. That is the mechanism behind “how do you even go back.” The counter-force is convenience-seeking, and it holds only until parity. Net: onchain, conditional on UX.</p>
+
+    <p><strong>Capitalism.</strong> Capital arbitrages friction, and the people doing the arbitrage prefer to operate from the cheaper venue, so the pump runs one way. Incumbents do not fight the architecture; they adopt it, because the first bank to settle instantly takes the others’ float. Net: onchain, from both ends.</p>
+
+    <p><strong>Government.</strong> Not one actor. Roughly 195 of them, competing for flows. Capital controls are a weak-currency tool; the issuer of the reserve currency has the opposite incentive, which is why the United States wrote a law for dollar stablecoins rather than against them. The real stress test already happened: two years of a hostile regime, enforcement by lawsuit, debanking. Builders moved offshore and stablecoin supply was back at all-time highs before a single law changed. Then the regime flipped. State strategy converges on the internet playbook: regulate the edges, where fiat touches the rail, and leave the rail. <span class="hl">Clampdowns reroute. They do not reverse.</span></p>
+
+    <p><strong>Technology.</strong> The cost of a transaction has fallen roughly three orders of magnitude and is still falling. Account abstraction turns self-custody from a chore into a free option. The deeper point is that tradfi’s own modernization path is this architecture. There is no non-ledger route to atomic, instant settlement. When DTCC modernizes, it builds a blockchain. Net: onchain, even from inside tradfi.</p>
+
+    <p><strong>AI agents.</strong> This force was not in anyone’s model five years ago, and it is the strongest, because it is not a preference argument. An agent is an economic actor with no legal personhood and no business hours. Every tradfi rail assumes a person at the end of it and a human clock. Onchain assumes a key. Agent money is onchain by construction. The card networks see this and are shipping agent payment products, but look at what those settle in: Stripe bought a stablecoin company, Visa settles in USDC. Even the tradfi agent rail settles onchain. Agents are also perfect arbitrageurs, which raises the velocity of everyone else’s money too. In the free-energy framing, they are a temperature multiplier.</p>
+
+    <div class="p">
+      <p>The obvious objection is that the same AI now finds exploits in smart contracts, and that tradfi, with its closed code, is shielded. Both halves are wrong in an instructive way. AI does find bugs in public code: <a href="https://www.anthropic.com/research/smart-contracts">Anthropic’s agents</a> reproduced half of 405 historical DeFi exploits in simulation. Pointed at 2,849 freshly deployed contracts, they found two zero-days worth $3,694 at an API cost of $3,476. The already-exploited long tail is being picked over, hack counts have doubled, and <a href="https://www.trmlabs.com/reports-and-whitepapers/the-2026-ai-in-crime-adoption-index">the money has not followed</a>: 4 percent of incidents produce 75 percent of losses, and those are stolen keys and deceived humans, not code. Smart contracts are also the one class of software that can be formally proven, small and deterministic with invariants you can state, and AI just removed the labor that made proving them expensive. The code attack is a short-term cost that hardens the rail.</p>
+      <span class="hand note">new in this draft. a reader asked “doesn’t AI get crypto hacked?” — it hacks identity first, and identity is tradfi’s model.</span>
+    </div>
+
+    <p>The human attack is the one that matters, and there tradfi is not shielded but exposed. Its security is identity-based, prove you are you, and AI attacks identity directly: <a href="https://www.biometricupdate.com/202610/italian-bank-loses-108m-to-ai-messaging-fraud-as-identifai-warns-of-deepfake-threat">a bank’s chairman wired €95 million</a> last month on the strength of a WhatsApp and a cloned voice, and reported deepfake-scam losses this year already exceed all of last year by 263 percent. Onchain security is key-based. A deepfake cannot sign. You can patch a signing flow; you cannot patch a chairman. Tradfi’s remaining shield is reversibility, which crypto can import without importing identity, while tradfi cannot import keys without becoming crypto. AI makes the next two years worse for crypto’s headlines and the next twenty worse for tradfi’s authentication model. It does not bend the curve. It steepens it.</p>
+
+    <p><span class="hl">Five forces. Five vectors. One direction.</span></p>
+
+    <h2>Information went first</h2>
+
+    <div class="p">
+      <p>Crypto is fighting the fight the open internet already won, and the nineties even used <span class="circle">the same word</span>. They called it the Crypto Wars, and they meant cryptography. In 1993 the US government proposed the Clipper chip, a backdoored encryption standard. Strong encryption sat on the Munitions List; exporting it was arms trafficking. Phil Zimmermann was investigated for three years for publishing PGP. It took a federal court, in Bernstein v. DOJ, to say that code is speech, and the export controls came down in 2000. In 1996 Congress passed the Communications Decency Act to police what could be said on the network; the Supreme Court struck down its speech restrictions the next year. And through the whole of the late nineties the standard objection to e-commerce was: why would anyone put their credit card on the internet.</p>
+      <span class="hand red note">Crypto Wars, 1993. same word, same fight, same ending.</span>
+    </div>
+
+    <p>Notice how each was resolved. Not by closing the substrate. By building trust as a layer above it: SSL, chargebacks, Amazon’s guarantee. Napster to iTunes is the whole flywheel in miniature. Grey-market demand found the rail first, and legitimate supply followed because that was where the demand was. Memecoins are Napster. Tokenized treasuries are iTunes.</p>
+
+    <p>The pattern to steal: <span class="hl">the open base layer wins, and trust gets rebuilt on top of it, never pushed back into it.</span></p>
+
+    <p>There is one disanalogy, and anyone making this argument has to face it. Information was never a core function of the state. Money is: seigniorage, monetary policy, sanctions. Resistance to open money is structurally more durable than resistance to open information, so the curve is slower and bumpier. And information’s failure mode, misinformation, is diffuse, while money’s failure mode, a hack, is acute and personal. Trust is harder to rebuild.</p>
+
+    <p>My answer is that the largest losses in crypto’s history, Mt. Gox, FTX, the Bybit hack, were custodial or signing-interface failures, not protocol failures. Centralized failure is evidence for the rail, not against it. But the disanalogy is why “eventually” is the right word and “soon” is not.</p>
+
+    <p>For calibration: if 2022 was crypto’s 2000, we are in 2004 or 2005. Post-crash, infrastructure built out and cheap, the first businesses with real revenue showing up. The dot-com crash did not reverse the information curve. 2022 did not reverse the stablecoin curve.</p>
+
+    <p>The deepest version of “internet money” is this. Every global network grows a unit of account that matches its topology. The internet’s topology is global and permissionless. Today we run a global information graph on top of national money graphs, and the mismatch is the friction: six percent to send money across a border, days for a wire to clear. Friction is pressure. Pressure finds the exit.</p>
+
+    <h2>Money at the speed of attention</h2>
+
+    <p><a href="https://epilepsywarning.com/megachurch-time">Megachurch Time</a> argues that attention has become super-pareto and fast: one topic takes ninety percent of mindshare for twelve to forty-eight hours, and everyone is watching the same broadcast. The author’s best trades were buying the day’s note before it peaked.</p>
+
+    <div class="p">
+      <p>Look at how those trades were expressed. Sydney Sweeney through American Eagle stock. Saylor through Bitcoin puts. Proxies, with basis risk, because tradfi cannot list the thing people are actually paying attention to. The only financial layer isomorphic to a super-pareto, hours-long, globally synchronized attention market is one that can list anything, in minutes, into one global pool. Memecoins and prediction markets list the attention object directly. Basis risk goes to zero. Flow moves to the venue of direct expression. If information is a megachurch, money has to be able to tithe at the same speed, in the same room.</p>
+      <span class="hand note">AEO for Sydney Sweeney. BTC puts for Saylor. the basis risk is the tell.</span>
+    </div>
+
+    <p>The supply side works the same way. A token that becomes the day’s note raises in twenty-four hours what a Series A takes six months to raise. Attention-speed capital formation exists in exactly one place. Founders notice.</p>
+
+    <p>Two cautions, both from the same essay. The author is less sure than before that hyper-gambling is inevitable, and expects it may get stigmatized. Probably right. Attention money is hot money, and the up-only chart is not drawn by the tide. It is drawn by what the tide leaves behind: wallets, stablecoin float, habits, the way the dot-com bubble left fiber in the ground. And the megachurch dynamic applies to chains and assets too. “Money onchain, up only” is fully compatible with 99 percent of tokens going to zero. <span class="hl">The claim is about the rail, never the asset.</span></p>
+
+    <h2>Demand pulls supply</h2>
+
+    <p>If retail money goes to the freest venue, the people who make assets follow it, because that is where the capital is. But the reason the demand is leaving is not only freedom. The traditional path is timed against retail, legally: the hundred-x now happens in private, where the accredited-investor rule keeps retail out, and retail is invited in at the IPO, which is by construction the moment insiders want liquidity and growth is slowing. The last leg is the only leg retail is allowed on. The rational response is to go where the early leg is open, and onchain is the only venue where it is.</p>
+
+    <div class="p">
+      <p>Crypto’s version of the game is not fairer in outcome; it has its own insider timing, at the token launch instead of the listing. What it is, is legible: you can see the wallets, the unlocks, the day the insiders sell, and the market reprices its norms in months rather than decades. I would rather play in a harsh place with legible rules than a comfortable one with hidden ones, and the ultimatum-game literature says most people agree, up to a point: people reject unfair splits when rejecting is cheap and swallow them when it is expensive. So the flywheel does not need onchain returns to beat tradfi’s, only to be not much worse. The supply that follows is still thin and often bad, but that is adverse selection in founders, not a property of the rail, and the first counterexamples, Hyperliquid above all, have already arrived. How the rest of the supply gets here is the subject of another essay.</p>
+      <span class="hand note">→ next essay: the capital formation thesis. who issues into the tide.</span>
+    </div>
+
+    <h2>What would make me wrong</h2>
+
+    <div class="p">
+      <p>Most of the money that goes onchain will be centrally issued stablecoins with a freeze function. The up-only chart is value on open rails, not censorship-resistant value. I am claiming the first. The second is a harder argument and I have not made it here.</p>
+      <span class="hand red note">hold me to these. reply with the one I missed.</span>
+    </div>
+
+    <p>Money is sovereignty. The curve is slower and bumpier than information’s by design, and a decade of this looking slow would not falsify the thesis. Losses per dollar secured still rising on a multi-year window would.</p>
+
+    <p>The casino channel is leaky and can be stigmatized. If the thesis rested on gambling it would be fragile. It rests on the infrastructure ratchet: fiber in the ground.</p>
+
+    <p>Onchain cannot fund physical capex at scale yet. The institutional wave is a dependency, not a given.</p>
+
+    <p>And “eventually” does a lot of work in any inevitability argument. The internet calibration is my clock. If this is 2005, the next fifteen years are the interesting ones.</p>
+
+    <h2>The argument in one breath</h2>
+
+    <p>Money goes where it has the most possible next moves at the lowest cost. Onchain is the only money that is global, always-on, programmable and holder-controlled at once, so it has strictly more moves, and its costs fall every year while tradfi’s are structural. Loss aversion makes optionality a one-way door once tasted. Capital arbitrages friction and incumbents adopt the architecture to compete. States compete for flows and the reserve-currency issuer has chosen to export open-rail dollars. Blockspace is heading to free. A new population of economic actors cannot use a bank at all, and the same intelligence that is stress-testing public code is dissolving the identity checks that private money runs on. Hacks and governments set the slope, not the sign. It happened to information first because information was never sovereignty. That is why money is slower. It is also why it is the same curve.</p>
+
+    <p class="hand red signoff">still a draft. it always will be. — WK</p>
+
+  </article>
+
+  <footer class="colophon">
+    <span>Draft 1 · 3 Nov 2026 · the marks change with every revision</span>
+    <span><a href="https://github.com/everythingempty/onchain-inevitable">source · github.com/everythingempty/onchain-inevitable</a></span>
+  </footer>
+
+</main>
+</body>
+</html>
